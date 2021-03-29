@@ -16,6 +16,7 @@ npm install / yarn install
 ```
 
 2. Run serverless offiline
+
 ```
 npm start / yarn start
 ```
@@ -107,6 +108,8 @@ curl --request POST \
   --header 'Content-Type: multipart/form-data; \
   --form 'file=<FILE_PATH>'
 ```
+
+The `AUTH_TOKEN` is found in response of the request in `/dev/login`, is the parameter `token`
 
 The succes response return status 200 and:
 
