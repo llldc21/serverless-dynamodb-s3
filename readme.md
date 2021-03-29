@@ -33,8 +33,7 @@ curl --request POST \
   --data '{
 	  "email": <EMAIL>,
 	  "password": <PASSWORD>
-  }
-'
+  }'
 ```
 
 The sucess return is:
@@ -64,8 +63,7 @@ curl --request POST \
   --data '{
 	  "email": <EMAIL>,
 	  "password": <PASSWORD>
-  }
-'
+  }'
 ```
 
 The success return status 200 and:
