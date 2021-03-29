@@ -23,6 +23,42 @@ npm start / yarn start
 
 ## Routes
 
+When you run serverless offline by default it uses port 3000, but changing serverless.yml, in `custom -> serverless-offline -> httpPort`, it is possible to define which port you want it to run on.
+
+The `BASE_URL` can be found after serverless start, when you run the command to start, it prints some information on the screen, such as the routes of the application, the services started and where the server is running.
+
+Your terminal should appear something like this:
+
+```
+Serverless: starting handler
+warn: the bucket "local-bucket" already exists
+Serverless: S3 local started ( port:4569, family: IPv4, address: 127.0.0.1 )
+Dynamodb Local Started, Visit: http://localhost:8000/shell
+Serverless: DynamoDB - created table users-table
+offline: Starting Offline: dev/us-east-1.
+offline: Offline [http for lambda] listening on http://localhost:3002
+offline: Function names exposed for local invocation by aws-sdk:
+           * verify-token: tweak-test-dev-verify-token
+           * UploadFileHome: tweak-test-dev-UploadFileHome
+           * login: tweak-test-dev-login
+           * register: tweak-test-dev-register
+offline: Configuring Authorization: upload verify-token
+
+POST http://localhost:3000/dev/upload
+POST http://localhost:3000/2015-03-31/functions/UploadFileHome/invocations
+POST http://localhost:3000/dev/login
+POST http://localhost:3000/2015-03-31/functions/login/invocations
+POST http://localhost:3000/dev/register
+POST http://localhost:3000/2015-03-31/functions/register/invocations
+
+offline: [HTTP] server ready: http://localhost:3000 🚀
+offline:
+offline: Enter "rp" to replay the last request
+```
+
+The base url ir found in
+`offline: [HTTP] server ready: http://localhost:3000 🚀`
+
 ### Authentication
 
 - `/dev/register` - Used by create an user, expect:
