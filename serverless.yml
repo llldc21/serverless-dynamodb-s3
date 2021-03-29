@@ -53,30 +53,32 @@ custom:
       migrate: true
       seed: true
       convertEmptyValues: true
+  serverless-offline:
+    httpPort: 3000
 
 resources:
-    Resources:
-      NewResource:
-        Type: AWS::S3::Bucket
-        Properties:
-          BucketName: local-bucket
-      usersTable:
-        Type: AWS::DynamoDB::Table
-        Properties:
-          TableName: "users-table"
-          AttributeDefinitions:
-            - AttributeName: email
-              AttributeType: S
-            - AttributeName: type
-              AttributeType: S
-          KeySchema:
-            - AttributeName: email
-              KeyType: HASH
-            - AttributeName: type
-              KeyType: RANGE
-          ProvisionedThroughput:
-            ReadCapacityUnits: 1
-            WriteCapacityUnits: 1
+  Resources:
+    NewResource:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: local-bucket
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: "users-table"
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+          - AttributeName: type
+            AttributeType: S
+        KeySchema:
+          - AttributeName: email
+            KeyType: HASH
+          - AttributeName: type
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
 
 plugins:
   - serverless-s3-local
