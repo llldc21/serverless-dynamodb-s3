@@ -1,0 +1,84 @@
+service: tweak-test
+app: tweak-test
+org: llldc21
+
+frameworkVersion: "2"
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: "20201221"
+
+functions:
+  verify-token:
+    handler: handler.verifyToken
+  UploadFileHome:
+    handler: handler.handler
+    events:
+      - http:
+          path: upload
+          method: post
+          cors: true
+          authorizer:
+            name: verify-token
+            identitySource: method.request.header.Authorization
+            resultTtlInSeconds: 3600
+  login:
+    handler: handler.get
+    events:
+      - http:
+          path: login
+          method: post
+          cors: true
+  register:
+    handler: handler.register
+    events:
+      - http:
+          path: register
+          method: post
+          cors: true
+
+custom:
+  s3:
+    host: localhost
+    directory: /tmp
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      heapInitial: 200m
+      heapMax: 1g
+      migrate: true
+      seed: true
+      convertEmptyValues: true
+
+resources:
+    Resources:
+      NewResource:
+        Type: AWS::S3::Bucket
+        Properties:
+          BucketName: local-bucket
+      usersTable:
+        Type: AWS::DynamoDB::Table
+        Properties:
+          TableName: "users-table"
+          AttributeDefinitions:
+            - AttributeName: email
+              AttributeType: S
+            - AttributeName: type
+              AttributeType: S
+          KeySchema:
+            - AttributeName: email
+              KeyType: HASH
+            - AttributeName: type
+              KeyType: RANGE
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1
+
+plugins:
+  - serverless-s3-local
+  - serverless-dynamodb-local
+  - serverless-offline
